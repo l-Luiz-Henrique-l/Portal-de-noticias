@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Portal - Login</title>
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+    <script src="{% static 'core/main-usuarios.js' %}" defer></script>
+    
+    <style>
+        :root{
+          --bg: #07080a;
+          --surface: #0f1416;
+          --card: #0c0f11;
+          --muted: #9aa4ad;
+          --text: #e6eef3;
+          --accent: #ff3b30;
+          --accent-2: #7c3aed;
+          --glass: rgba(255,255,255,0.02);
+          --shadow: 0 10px 30px rgba(0,0,0,0.65);
+        }
+        html, body {
+          margin:0;
+          padding:0;
+          height:100%;
+          font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+          background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.06), transparent 10%),
+                      linear-gradient(180deg,#050607 0%, #0a0c0e 100%);
+          color: var(--text);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        body > * {
+          width: 100%;
+          max-width: 400px;
+        }
+        h1 {
+          text-align: center;
+          margin-bottom: 24px;
+        }
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          background: var(--card);
+          padding: 24px;
+          border-radius: 12px;
+          box-shadow: var(--shadow);
+        }
+        input[type="text"], input[type="password"], button {
+          padding: 10px 14px;
+          border-radius: 8px;
+          border: 1px solid rgba(255,255,255,0.05);
+          background: transparent;
+          color: var(--text);
+          outline: none;
+        }
+        input:focus {
+          border-color: rgba(124,58,237,0.7);
+          box-shadow: 0 6px 18px rgba(124,58,237,0.06);
+        }
+        button {
+          cursor: pointer;
+          background: linear-gradient(90deg,var(--accent),var(--accent-2));
+          color: white;
+          font-weight: 600;
+          border: none;
+          transition: transform .08s ease;
+        }
+        button:hover { transform: translateY(-2px); }
+        .cadastro-box {
+          text-align: center;
+          margin-top: 16px;
+        }
+        .cadastro-box button {
+          background: linear-gradient(90deg,var(--accent-2),var(--accent));
+          border: none;
+          color: white;
+          font-weight: 600;
+          cursor: pointer;
+          padding: 10px 14px;
+          border-radius: 8px;
+        }
+        .acesso-portal {
+          text-align: center;
+          margin-top: 12px;
+          font-size: 14px;
+          color: var(--muted);
+        }
+        .acesso-portal a {
+          color: var(--accent-2);
+          text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Portal - Login</h1>
+
+        <form id="form-login">
+            <input type="text" name="username" placeholder="Usuário" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+
+        <div id="login-msg" style="color:red; margin-top: 10px;"></div>
+
+        <div class="cadastro-box">
+            <p>Caso não tenha uma conta, se cadastre:</p>
+            <a href="{% url 'usuarios' %}">
+                <button type="button">Cadastrar</button>
+            </a>
+        </div>
+
+        <div class="acesso-portal">
+            <p>Caso não queira se cadastrar, você pode acessar nosso portal mesmo assim: <a href="http://127.0.0.1:8000/portal/">Acessar Portal</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Portal - Notícias</title>
+  <link rel="stylesheet" href="{% static 'core/style.css' %}">
+  <script src="{% static 'core/main-noticias.js' %}" defer></script>
+  <style>
+    /* Botão Portal personalizado */
+    #btn-portal {
+      background: linear-gradient(90deg, #7c3aed, #ff3b30);
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-left: 8px;
+      transition: transform .08s ease;
+    }
+    #btn-portal:hover { transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Barra de navegação -->
+    <nav>
+      <button onclick="window.location.href='/usuarios/'">Usuários</button>
+      <button onclick="window.location.href='/noticias/'">Notícias</button>
+      <button id="btn-logout">Sair</button>
+      <button id="btn-portal" onclick="window.location.href='http://127.0.0.1:8000/portal/'">Portal</button>
+    </nav>
+
+    <div class="brand">
+      <div class="logo">N</div>
+      <h1>Portal - Notícias</h1>
+    </div>
+
+    <div class="main-grid">
+      <!-- Formulário -->
+      <div class="card">
+        <h2>Cadastrar/Editar Notícia</h2>
+        <form id="form-noticia" class="form-row">
+            {% csrf_token %}
+            <input type="hidden" name="id" id="noticia-id">
+
+            <input type="text" name="titulo" placeholder="Título" required>
+            <textarea name="conteudo" placeholder="Conteúdo" rows="5" required></textarea>
+
+            <!-- Select de categoria -->
+            <select name="categoria" id="select-categoria" required>
+                <option value="">Selecione uma categoria</option>
+                <!-- Opções serão carregadas dinamicamente pelo JS -->
+            </select>
+
+            <button type="button" id="btn-salvar-noticia">Salvar</button>
+        </form>
+      </div>
+
+      <!-- Lista de notícias -->
+      <div>
+        <h2>Lista de Notícias</h2>
+        <ul id="noticias-list"></ul>
+        <div id="nav-noticias"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

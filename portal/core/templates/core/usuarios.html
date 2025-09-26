@@ -1,0 +1,191 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Usuários</title>
+<link rel="stylesheet" href="{% static 'core/style.css' %}">
+<script src="{% static 'core/main-usuarios.js' %}" defer></script>
+
+<style>
+:root{
+  --bg: #07080a;
+  --surface: #0f1416;
+  --card: #0c0f11;
+  --muted: #9aa4ad;
+  --text: #e6eef3;
+  --accent: #ff3b30;
+  --accent-2: #7c3aed;
+  --glass: rgba(255,255,255,0.02);
+  --shadow: 0 10px 30px rgba(0,0,0,0.65);
+}
+html, body {
+  margin:0;
+  padding:24px;
+  height:100%;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.06), transparent 10%),
+              linear-gradient(180deg,#050607 0%, #0a0c0e 100%);
+  color: var(--text);
+}
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+h1, h2 { text-align:center; margin-bottom:12px; }
+form {
+  display:flex;
+  flex-direction: column;
+  gap:10px;
+  background: var(--card);
+  padding:20px;
+  border-radius:12px;
+  box-shadow: var(--shadow);
+  width:100%;
+  max-width:420px;
+  margin-bottom:20px;
+}
+input, button {
+  padding:10px 12px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.05);
+  background: transparent;
+  color: var(--text);
+  outline: none;
+}
+input::placeholder { color: rgba(230,238,243,0.5); }
+input:focus {
+  border-color: rgba(124,58,237,0.7);
+  box-shadow: 0 6px 18px rgba(124,58,237,0.06);
+}
+button {
+  cursor:pointer;
+  background: linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:white;
+  font-weight:600;
+  border:none;
+  transition: transform .08s ease;
+}
+button:hover { transform: translateY(-2px); }
+
+/* Botão Portal na barra de navegação */
+#btn-portal {
+  background: linear-gradient(90deg, #7c3aed, #ff3b30);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform .08s ease;
+}
+#btn-portal:hover { transform: translateY(-2px); }
+
+/* barra de navegação */
+nav {
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin-bottom:18px;
+}
+nav button{
+  padding:8px 12px;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.03);
+  background:transparent;
+  color:var(--text);
+  cursor:pointer;
+}
+#btn-logout{
+  background: linear-gradient(90deg,var(--accent),var(--accent-2));
+  color:white;
+  border:none;
+  font-weight:600;
+}
+
+/* lista de usuários como cards */
+#usuarios-list{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:grid;
+  grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
+  gap:12px;
+  width:100%;
+  max-width:900px;
+}
+#usuarios-list li{
+  background:var(--card);
+  border-radius:10px;
+  padding:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  border:1px solid rgba(255,255,255,0.03);
+}
+.user-info{
+  display:flex;
+  flex-direction:column;
+}
+.user-info .username{ font-weight:700; color:var(--text) }
+.user-info .email{ font-size:13px; color:var(--muted); }
+
+/* botões dentro do card */
+.card-actions{ display:flex; gap:8px; }
+.card-actions button{
+  padding:6px 10px;
+  border-radius:8px;
+  border:none;
+  cursor:pointer;
+}
+.card-actions .edit{
+  background: linear-gradient(90deg, rgba(124,58,237,0.14), rgba(124,58,237,0.06));
+  color:var(--text);
+}
+.card-actions .del{
+  background: rgba(255,59,48,0.12);
+  color:var(--accent);
+  border: 1px solid rgba(255,59,48,0.08);
+}
+
+/* Paginação */
+#nav{ margin-top:12px; display:flex; gap:8px; justify-content:center; }
+
+@media (max-width:600px){
+  #usuarios-list{ grid-template-columns: 1fr; }
+}
+</style>
+
+</head>
+<body>
+    {% csrf_token %}
+
+    <!-- Barra de navegação -->
+    <nav>
+        <button onclick="window.location.href='/usuarios/'">Usuários</button>
+        <button onclick="window.location.href='/noticias/'">Notícias</button>
+        <button id="btn-logout">Sair</button>
+        <button id="btn-portal" onclick="window.location.href='http://127.0.0.1:8000/portal/'">Portal</button>
+    </nav>
+
+    <h1>Usuários</h1>
+
+    <!-- Formulário de cadastro/edição -->
+    <h2>Cadastrar/Editar Usuário</h2>
+    <form id="form-usuario">
+        <input type="hidden" name="id" id="usuario-id">
+        <input type="text" name="username" placeholder="Usuário" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Senha">
+        <button type="submit">Salvar</button>
+    </form>
+
+    <!-- Lista de usuários -->
+    <ul id="usuarios-list"></ul>
+
+    <!-- Paginação -->
+    <div id="nav"></div>
+</body>
+</html>
