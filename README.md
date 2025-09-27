@@ -1,6 +1,18 @@
-# Portal-de-noticias
-Modelo de portal de notícias usando django sqlite e outros
-Portal de Notícias - Sistema CRUD Web
+Portal-de-noticias
+
+Modelo de portal de notícias usando Django, com suporte a SQLite e PostgreSQL.
+
+🔹 Banco de Dados (PostgreSQL)
+
+Execute os comandos abaixo no psql para criar o banco e o usuário:
+
+CREATE DATABASE portal_noticias;
+CREATE USER portal_user WITH PASSWORD '123456';
+ALTER ROLE portal_user SET client_encoding TO 'utf8';
+ALTER ROLE portal_user SET default_transaction_isolation TO 'read committed';
+ALTER ROLE portal_user SET timezone TO 'UTC';
+GRANT ALL PRIVILEGES ON DATABASE portal_noticias TO portal_user;
+
 🔹 Descrição
 
 Este projeto é um portal de notícias com cadastro de usuários e gerenciamento de notícias.
@@ -10,13 +22,14 @@ Funcionalidades principais:
 
 Cadastro, edição e exclusão de usuários e notícias.
 
-Listagem de notícias com paginação.
+Listagem de notícias com paginação e com categoria.
 
 Autenticação e autorização de usuários.
 
 Interface web responsiva e temática escura.
 
 🔹 Tecnologias Utilizadas
+
 Back-end
 
 Python 3.x
@@ -80,8 +93,9 @@ Configure variáveis de ambiente (.env):
 
 SECRET_KEY=sua_chave_secreta
 DEBUG=True
-DB_USER=usuario
-DB_PASSWORD=senha
+DB_NAME=portal_noticias
+DB_USER=portal_user
+DB_PASSWORD=123456
 DB_HOST=localhost
 DB_PORT=5432
 
